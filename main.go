@@ -30,6 +30,7 @@ type Response struct {
     Data Data `json:"data"`
 }
 
+
 type Data struct {
     ProductId int `json:"productId"`
     ProductName string `json:"productName"`
@@ -98,6 +99,60 @@ func kitaraRequest(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+type ResponseMag struct {
+    Code int `json:"code"`
+    Message string `json:"message"`
+    Data []Key `json:"data"`
+}
+type Magazine struct {
+    Data [][]int
+}
+type Key struct {
+    Magazine string `json:"magazine"`
+    Verified string `json:"verified"`
+}
+
+func verify(w http.ResponseWriter, r *http.Request) {
+    decoder := json.NewDecoder(r.Body)
+
+    var data Magazine
+    err := decoder.Decode(&data)
+    if err != nil {
+        panic(err)
+    }
+
+    var ls []Key
+    mag := data.Data
+    for i:= 0;i<len(mag); i++{
+        var v bool = true
+        for j:= 0;j<len(mag[i]); j++{
+            if mag[i][j] != 1{
+                v = false
+            }
+        }
+        fmt.Println(mag[i], v)
+        ls = append(ls, Key{Magazine:fmt.Sprint(mag[i]), Verified:fmt.Sprint(v)})
+    }
+
+    resp := &ResponseMag{Code: 200, Message:"SUCCESS", Data:ls}
+
+    w.Header().Set("Content-Type", "application/json")
+    switch r.Method {
+    case "POST":
+        e, err := json.Marshal(resp)
+        if err != nil {
+            fmt.Println(err)
+        }
+        fmt.Println(string(e))
+        w.WriteHeader(http.StatusOK)
+        w.Write([]byte(string(e)))
+    default:
+        w.WriteHeader(http.StatusNotFound)
+        w.Write([]byte(`{"message": "not found"}`))
+    }
+}
+
+
 func findKey(){
     fmt.Printf("X in [%d,%d]\n\n",YP, XP)
     // var key bool = false
@@ -160,7 +215,8 @@ func main() {
 
     http.HandleFunc("/kitara-store", kitaraStatus)
     http.HandleFunc("/kitara-store/request", kitaraRequest)
+    http.HandleFunc("/soldier/verify", verify)
 
 
-    // log.Fatal(http.ListenAndServe(":8080", nil))
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }

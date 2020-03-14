@@ -10,6 +10,31 @@ go run main.go
 
 ###### soldier
 ```
+http://localhost:8080/soldier/verify
+request:
+{
+	"Data":[[1,1,1,0,0],[1,1,1,1,1],[0,0,0,0,0]]
+}
+
+response:
+{
+    "code": 200,
+    "message": "SUCCESS",
+    "data": [
+        {
+            "magazine": "[1 1 1 0 0]",
+            "verified": "false"
+        },
+        {
+            "magazine": "[1 1 1 1 1]",
+            "verified": "true"
+        },
+        {
+            "magazine": "[0 0 0 0 0]",
+            "verified": "false"
+        }
+    ]
+}
 ```
 
 ###### store
