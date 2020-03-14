@@ -40,14 +40,42 @@ response:
 ###### store
 ```
 http://localhost:8080/kitara-store
+response:
+{
+	code: 200,
+	message: "SUCCESS",
+	data: {
+		productId: 1,
+		productName: "T-SHIRT A",
+		productQuantity: 3
+	}
+}
+
 http://localhost:8080/kitara-store/request?productId=1&quantity=1
+response:
+{
+	code: 200,
+	message: "SUCCESS"
+}
 ```
 
 ###### 5 lokasi:
 ```
+[# # # # # # # #]
+[# . . . . . . #]
+[# . # # # . . #]
+[# . . . # . # #]
+[# X # . . . . #]
+[# # # # # # # #]
 1 langkah ke utara, 2 langkah ke timur dan 1 langkah ke selatan
 3 langkah ke utara, 4 langkah ke timur dan 1 langkah ke selatan
 3 langkah ke utara, 4 langkah ke timur dan 2 langkah ke selatan
 3 langkah ke utara, 4 langkah ke timur dan 3 langkah ke selatan
 3 langkah ke utara, 5 langkah ke timur dan 1 langkah ke selatan
+[# # # # # # # #]
+[# . . . . . . #]
+[# . # # # K K #]
+[# . . . # K # #]
+[# X # K . K . #]
+[# # # # # # # #]
 ```
